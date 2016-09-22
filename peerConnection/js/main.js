@@ -2,6 +2,8 @@
 
 var startButton = document.getElementById('startButton');
 var callButton = document.getElementById('callButton');
+var hangupButton = document.getElementById('hangupButton');
+
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
@@ -19,6 +21,12 @@ startButton.onclick = function() {
             console.log('getUserMedia error.');
         });
 }
+
+function RTCPeerConnection(servers){
+	var rtc = mozRTCPeerConnection(servers) || webkitRTCPeerConnection(servers) || RTCPeerConnection(servers);
+	console.log(rtc);
+	return rtc;
+};
 
 callButton.onclick = function() {
     var servers = null;
@@ -78,4 +86,9 @@ function iceCandidate(pc, event){
 			   function(err) { console.log("onicecandidate Error" + err); }
 		);
 	}
+};
+
+hangupButton.onclick = function(){
+	pc1.close();
+	pc2.close();
 }
